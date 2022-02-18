@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yah.job_api.R
 import com.yah.job_api.model.JobResponse
+import com.yah.job_api.model.Jobs
 import com.yah.job_api.network.JobsRetriever
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -43,8 +44,8 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    private fun renderData(jobResponse: JobResponse) {
-        recyclerview.adapter = JobAdapter(jobResponse)
+    private fun renderData(jobResponse: List<Jobs>) {
+        recyclerview.adapter = JobAdapter(jobResponse = jobResponse)
 
     }
 }
