@@ -1,27 +1,37 @@
 package com.yah.job_api.ui
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yah.job_api.R
-import com.yah.job_api.model.JobResponse
+import com.yah.job_api.databinding.ActivityMainBinding
 import com.yah.job_api.model.Jobs
 import com.yah.job_api.network.JobsRetriever
-import kotlinx.android.synthetic.main.activity_main.*
+//import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.coroutineContext
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     private val jobRetriever : JobsRetriever = JobsRetriever()
+    private var jobs = List<Jobs>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        intRecyclerview()
-        fetchJobs()
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
+        binding.recyclerview.adapter = JobAdapter()
+
+        //intRecyclerview()
+        //fetchJobs()
 
     }
 
@@ -44,12 +54,18 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    private fun renderData(jobResponse: List<Jobs>) {
-        recyclerview.adapter = JobAdapter(jobResponse = jobResponse)
+    private fun renderData(jobResponse: Jobs) {
+        binding.recyclerview.adapter
 
+    }
+    private fun renderData(jobResponse: List<Jobs>) {
+        binding.recyclerview.adapter = JobAdapter(jobResponse = jobResponse)
+
+    }
+
+    private fun intRecyclerview() {
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
     }
 }
 
-    private fun intRecyclerview() {
-        recyclerview.layoutManager = LinearLayoutManager(this)
-    }
+

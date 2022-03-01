@@ -1,30 +1,31 @@
 package com.yah.job_api.network
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.yah.job_api.model.Jobs
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.NetworkInterface
-
+import com.yah.job_api.network.NetworkInterface
 
 
 //Issue:
 //getJob() wont import from NetworkInterface.kt
 
 class JobsRetriever {
-    private val networkInterface: NetworkInterface
 
     companion object {
         var BaseUrl = "https://www.reed.co.uk"
     }
 
-    init {
-        val retrofit = Retrofit
-            .Builder()
-            .baseUrl(BaseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    private val retrofit = Retrofit
+        .Builder()
+        .baseUrl(BaseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-        networkInterface = retrofit.create(NetworkInterface::class.java)
+    private val networkInterface: NetworkInterface by lazy {
+        retrofit.create(NetworkInterface::class.java)
     }
 
    suspend fun getJobs() : List<Jobs> {
