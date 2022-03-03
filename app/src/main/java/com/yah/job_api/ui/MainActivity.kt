@@ -12,6 +12,7 @@ import com.yah.job_api.R
 import com.yah.job_api.databinding.ActivityMainBinding
 import com.yah.job_api.model.Jobs
 import com.yah.job_api.network.JobsRetriever
+import com.yah.job_api.network.NetworkInterface
 //import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.coroutineContext
@@ -21,7 +22,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val jobRetriever : JobsRetriever = JobsRetriever()
-    private var jobs = List<Jobs>()
+
+//    private var jobs = List<Jobs>
+    private var jobs = getJobs()
+//    private var jobs = NetworkInterface.getJobs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
